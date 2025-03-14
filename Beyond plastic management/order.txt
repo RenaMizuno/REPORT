@@ -1,0 +1,5 @@
+touch data/.gitkeep notebooks/.gitkeep figures/.gitkeep
+git add .
+git commit -m "Added .gitkeep to track empty folders"
+git push origin main
+
