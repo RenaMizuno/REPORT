@@ -1,6 +1,5 @@
-📂 Project-Title/
-│── 📄 README.md  # Short description of the project (Max 300 words)
-│── 📄 Report.md  # The research report in Markdown format (5000 - 7000 words). Important, the references are not included in the word count. 
-│── 📁 data/  # Raw and processed datasets
-│── 📁 notebooks/  # Jupyter notebooks with code and analysis
-│── 📁 figures/  # Plots, charts, and visualizations
+cd /path/to/Beyond-plastic-management
+echo "Placeholder content" > data/sample.txt
+git add .
+git commit -m "Added sample.txt to data folder"
+git push origin main
