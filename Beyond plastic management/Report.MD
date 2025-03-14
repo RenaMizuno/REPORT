@@ -13,7 +13,7 @@ Plastic materials are used not only in plastic bags and bottles of water but als
 
 ## 1.2 Objectives
 
-Post-research about correlations between education and economic growth revealed significance [1]: https://www.researchgate.net/publication/370993206_The_relationship_between_education_and_economic_growth_A_cross-country_analysis The richer the countries become, the more money the government dedicates to education. When people are educated and skilled, the chance of obtaining an occupation with a higher salary is raised. Subsequently, more money was used to promote economic growth.  This trend could be observed not only at the societal level but also at the individual level. The higher GDP per capita countries showed this tendency for more citizens to spend on education for postsecondary school in developing countries like Luxemburg [2].
+Post-research about correlations between education and economic growth revealed significance [1]:(#references) The richer the countries become, the more money the government dedicates to education. When people are educated and skilled, the chance of obtaining an occupation with a higher salary is raised. Subsequently, more money was used to promote economic growth.  This trend could be observed not only at the societal level but also at the individual level. The higher GDP per capita countries showed this tendency for more citizens to spend on education for postsecondary school in developing countries like Luxemburg [2].
 However, economic growth does not always correlate to significant practical plastic waste management changes. Despite the fact that GDP growth is upward in all region and their considerable growth,  some regions show distinctive trends, notably the world-leading country, the USA. Its GDP score was 10 to 21 trillion between 2000 and 2020, the highest economic growth(Figure 3). Yet, no significant improvement in plastic waste management was observed, although the quality of education(goal 4 in SDG) was maintained at over 90%(Figure 4). In contrast, China ranked 2nd largest economic growth country, experienced rapid growth from 1.2 to 14 trillion with a constant quality education rate of 97%, dramatically improving plastic waste management in mismanagement. India, the country with the third highest GDP, followed this trend in plastic waste mismanagement on a smaller scale in terms of GDP from 0.4 to 2 trillion and a gradual increase in quality education from 60 to 80%. These two Asian countries showed similar plastic management trends with different GDP scores. Conversely, Europe reflected a constant education rate and stable economic growth upon improvements in landfill management, although the GDP level is much lower than in India.
 This correlational study aims to reveal how much education and economic growth influence plastic management change by category and which regions are significant. Since each continent and country has different features, it is noteworthy to detect the discrepancy between them from heterogeneous perspectives so that the thriving region can be a model of the countries that suffer ongoing stagnation with improvement in SDG goals [3]. 
 
@@ -70,7 +70,7 @@ Considering the findings above, regions with higher SDG Goal 4 and 8 scores (edu
 The correlation between education and economic growth is positive. However, GDP alone does not improve plastic waste management, as the case of the USA shows. A further factor that can enhance environmental behaviour would be constant high SDG scores and higher education completion, such as university, to apply the knowledge gained from sustainability education. This requires government financial support. As a matter of fact,  students in the USA likely struggle with the cost of living during their studies due to the high tuition fees for post-secondary education, while European countries have excellent educational services at affordable prices for citizens,
 As some countries experienced stagnation in the improvement of the score and a high rate of littering, the European model may offer a viable solution, albeit Europe itself may need further improvement in decreasing the incarceration rate.  Not only education funded by governments but also the ecosystem and selling plastic-free products encourage the consumer to be eco-friendly, such as German vending machines recycling cans and plastic bottles with a refund of credit for materials.  Therefore, practical social frameworks should be introduced to the prevailing society so that recycling becomes a habit.
 
-# 7.References
+## References
 
 [1] Bah. I. A., “The relationship between education and economic growth: A cross-country analysis”, Research Society and Development 12(5):e19312540522,
 2023. May,
@@ -125,7 +125,7 @@ https://www.businessperspectives.org/index.php/journals/knowledge-and-performanc
 
 “The Sustainable Development Goals Report 2024”, United Nations, 2024, https://unstats.un.org/sdgs/report/2024/The-Sustainable-Development-Goals-Report-2024.pdf
 
-# 8.Appendix
+# Appendix
 
 Momeni, M., “Plastic pollution”, Kaggle, 2023  https://www.kaggle.com/datasets/imtkaggleteam/plastic-pollution?resource=download 
 
