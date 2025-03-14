@@ -58,29 +58,29 @@ As some countries experienced stagnation in the improvement of the score and a h
 
 # 7.References
 
-[1]: Bah. I. A., “The relationship between education and economic growth: A cross-country analysis”, Research Society and Development 12(5):e19312540522,
+[1] Bah. I. A., “The relationship between education and economic growth: A cross-country analysis”, Research Society and Development 12(5):e19312540522,
 2023. May,
 https://www.researchgate.net/publication/370993206_The_relationship_between_education_and_economic_growth_A_cross-country_analysis
 
-[2] : “Education Expenditures by Country”, National Centre for Education Statistic, Figure 4. Expenditures per full-time-equivalent (FTE) student for postsecondary education in selected Organization for Economic Cooperation and Development (OECD) countries, by gross domestic product (GDP) per capita: 2019 2023.08, https://nces.ed.gov/programs/coe/indicator/cmd/education-expenditures-by-country
+[2] “Education Expenditures by Country”, National Centre for Education Statistic, Figure 4. Expenditures per full-time-equivalent (FTE) student for postsecondary education in selected Organization for Economic Cooperation and Development (OECD) countries, by gross domestic product (GDP) per capita: 2019 2023.08, https://nces.ed.gov/programs/coe/indicator/cmd/education-expenditures-by-country
 
-[3]: UNESCO Institute for Statistics, Global Education Monitoring Report Team, ”Meeting commitments: are countries on track to achieve SDG 4?”, UNESCO UIS, p.14, 2019, https://uis.unesco.org/sites/default/files/documents/meeting-commitments-are-countries-on-track-achieve-sdg4.pdf
+[3] UNESCO Institute for Statistics, Global Education Monitoring Report Team, ”Meeting commitments: are countries on track to achieve SDG 4?”, UNESCO UIS, p.14, 2019, https://uis.unesco.org/sites/default/files/documents/meeting-commitments-are-countries-on-track-achieve-sdg4.pdf
 
-[4] : Liu. J, Hu. Z,  Du. F, Tang. W, Zheng. S, Lu. S, An. A, Ding .J, “Environment education: A first step in solving plastic pollution”, 2023, https://www.frontiersin.org/journals/environmental-science/articles/10.3389/fenvs.2023.1130463/full, frontiers
+[4] Liu. J, Hu. Z,  Du. F, Tang. W, Zheng. S, Lu. S, An. A, Ding .J, “Environment education: A first step in solving plastic pollution”, 2023, https://www.frontiersin.org/journals/environmental-science/articles/10.3389/fenvs.2023.1130463/full, frontiers
 
-[5]: Makarenko.I., Plastun.A, Petrushenko.Y.,Vorontsova. A., Alwasiak. S., “SDG 4 and SDG 8 in the knowledge economy: A meta-analysis in the context of post-COVID-19 recovery”
+[5] Makarenko.I., Plastun.A, Petrushenko.Y.,Vorontsova. A., Alwasiak. S., “SDG 4 and SDG 8 in the knowledge economy: A meta-analysis in the context of post-COVID-19 recovery”
 , p.60, 2021, https://www.businessperspectives.org/images/pdf/applications/publishing/templates/article/assets/15921/KPM_2021_01_%20Makarenko.pdf
 
-[6]: Makarenko.I., Plastun.A, Petrushenko.Y.,Vorontsova. A., Alwasiak. S., “SDG 4 and SDG 8 in the knowledge economy: A meta-analysis in the context of post-COVID-19 recovery”
+[6] Makarenko.I., Plastun.A, Petrushenko.Y.,Vorontsova. A., Alwasiak. S., “SDG 4 and SDG 8 in the knowledge economy: A meta-analysis in the context of post-COVID-19 recovery”
 , p.63, 2021, https://www.businessperspectives.org/images/pdf/applications/publishing/templates/article/assets/15921/KPM_2021_01_%20Makarenko.pdf
 
-[7]: Pakkan. S., Sudhakar. C., Shubham Tripathi. S., Rao. M., “A correlation study of sustainable development goal (SDG) interactions”, Springer Nature Link, 2022
+[7] Pakkan. S., Sudhakar. C., Shubham Tripathi. S., Rao. M., “A correlation study of sustainable development goal (SDG) interactions”, Springer Nature Link, 2022
 https://link.springer.com/article/10.1007/s11135-022-01443-4
 
-[8]: Turner.K., Kim.Y.,”Problems of the US Recycling Programs: What Experienced Recycling Program Managers Tell”, Sustainability 2024, 16(9), 2024, ;https://www.mdpi.com/2071-1050/16/9/3539
+[8] Turner.K., Kim.Y.,”Problems of the US Recycling Programs: What Experienced Recycling Program Managers Tell”, Sustainability 2024, 16(9), 2024, ;https://www.mdpi.com/2071-1050/16/9/3539
 
 
-[9]: Hanson. M., (2025.03.08)“Average Cost of College & Tuition”, Education Data Initiative,
+[9] Hanson. M., (2025.03.08)“Average Cost of College & Tuition”, Education Data Initiative,
 https://educationdata.org/average-cost-of-college#:~:text=The%20average%20cost%20of%20attendance,or%20%24234%2C512%20over%204%20years.
 
 Other references:
