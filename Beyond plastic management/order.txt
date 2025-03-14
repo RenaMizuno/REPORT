@@ -1,5 +1,0 @@
-cd /path/to/Beyond-plastic-management
-echo "Placeholder content" > data/sample.txt
-git add .
-git commit -m "Added sample.txt to data folder"
-git push origin main
