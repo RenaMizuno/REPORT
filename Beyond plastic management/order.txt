@@ -1,5 +1,6 @@
-touch data/.gitkeep notebooks/.gitkeep figures/.gitkeep
-git add .
-git commit -m "Added .gitkeep to track empty folders"
-git push origin main
-
+📂 Project-Title/
+│── 📄 README.md  # Short description of the project (Max 300 words)
+│── 📄 Report.md  # The research report in Markdown format (5000 - 7000 words). Important, the references are not included in the word count. 
+│── 📁 data/  # Raw and processed datasets
+│── 📁 notebooks/  # Jupyter notebooks with code and analysis
+│── 📁 figures/  # Plots, charts, and visualizations
