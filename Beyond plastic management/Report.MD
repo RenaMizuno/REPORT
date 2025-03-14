@@ -8,8 +8,7 @@ Author: Rena Mizuno
 Plastic mismanagement has been recognised as a dominant issue that needs to be solved for global protection. Since the rapid increase in plastic production since 1950 and its waste, this planet is highly likely to be polluted with plastic. Annual plastic production was more than 40 billion in 2020(Figure 1), and the prediction indicates that approximately 120 billion plastic will be produced in 2060(Figure 2). Most disposal plastics, such as plastic bags and packages, have been classified as landfilled, as the data shows; the landfill rate is the highest globally among the plastic waste categories of landfill, recycling, incineration and mismanagement. Besides recycling, plastics likely transform into microplastics or toxic chemicals in various ways and pollute the environment. For example, incineration pollutes the air, mismanagement damages marine life, and landfills intoxicate the soil, which destroys the ecosystem. 
 Plastic materials are used not only in plastic bags and bottles of water but also in clothes and electronic devices. As the prevailing lifestyle is an overreliance on plastic, it is pivotal to reduce mismanagement and minimise plastic consumption by proper recycling or refraining from disposing of plastic items. 
 
-![Figure 1](figures/Figure1.png)
-![Figure 2](figures/Figure2.png)
+![Figure 1](Beyond_Plastic_Management/figures/Figure-1.png)
 
 ## 1.2 Objectives
 
