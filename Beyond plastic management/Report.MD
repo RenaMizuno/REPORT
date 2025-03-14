@@ -36,12 +36,353 @@ Previous research on the correlations between economic growth and quality educat
 ## 3.1 Data Collection
 
 The primary dataset of SDGs and plastic management was cited from Kaggle. The SDG database is the same as the prototype on the United Nations’ website. The number of datasets used was minimised to avoid measurement error. Therefore, based on these two datasets, this research was conducted to observe three correlations of education, economic growth, and plastic management. In addition, the other CSV files stemming from the same plastic management datasets were used to predict plastic production and detect countries matching the plastic management dataset by region used as the primary dataset in this research. In addition, a GDP dataset in US dollars was used to visualise the overview of respective trends (matplotlib and seaborn were used for most data visualisation). 
-Preprocessing was executed by modifying the names of columns in one dataset to match another so that these datasets could be merged(pandas). Then, data cleaning was processed by detecting the empty values; however, no missing values were detected. Subsequently, sampling size was extracted by extracting matching countries by their name and country codes. The sample size of countries extracted was approximately 70 % of those listed in the SDG data (N = 195, n = 140). For this research, Spearman correlation was mainly employed, as mentioned in the theoretical framework section. In the process of data analysis, Fisher’s z standardisation was applied to the result of Spearman correlation so that all the data could be appropriate for correlational research.  Data was mainly visualised in line graphs and heat maps. When all the data was combined for a holistic correlation approach, standardising all the data above was applied and they were visualised individually in a biplot to visualise the tendencies in one place.
+Preprocessing was executed by modifying the names of columns in one dataset to match another so that these datasets could be merged(pandas).
+Then, data cleaning was processed by detecting the empty values; however, no missing values were detected. Subsequently, sampling size was extracted by extracting matching countries by their name and country codes. The sample size of countries extracted was approximately 70 % of those listed in the SDG data (N = 195, n = 140). For this research, Spearman correlation was mainly employed, as mentioned in the theoretical framework section. In the process of data analysis, Fisher’s z standardisation was applied to the result of Spearman correlation so that all the data could be appropriate for correlational research.  Data was mainly visualised in line graphs and heat maps. When all the data was combined for a holistic correlation approach, standardising all the data above was applied and they were visualised individually in a biplot to visualise the tendencies in one place.
+'''
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import textwrap
+import statsmodels.api as sm
+from scipy.stats import pearsonr, ttest_ind, skew, kurtosis, shapiro, kstest ,spearmanr, kendalltau, fisher_exact
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+#Dataset from kaggle:
+#df3 and df4 are same datasets, therefore, matching countries among 3 different datasets
+#were extracted as'country_groups' and 'continent_mapping' shows. 
+df3 = pd.read_csv("3- share-plastic-fate.csv")
+df4 = pd.read_csv("4- mismanaged-plastic-waste-per-capita.csv")
+df_sdg= pd.read_csv('sdg_index_2000-2022.csv')
+dfgdp = pd.read_csv('gdp.csv')
+
+df_sdg["year"] = df_sdg["year"].round().astype(int)  # Rounds and converts to int
+df_filtered = df_sdg[(df_sdg["year"] >= 2000) & (df_sdg["year"] <= 2020)].copy()
+df_sdg = df_sdg[df_sdg["year"] % 1 == 0]  
+
+
+columns_to_keep = ['Country Name', 'Code'] + [str(year) for year in range(2000, 2021)]
+filtered_dfgdp = dfgdp[columns_to_keep]
+output_file_path = 'filtered_dfgdp_2000_2020.csv' 
+filtered_dfgdp.to_csv(output_file_path, index=False)
+gdp = pd.read_csv('filtered_dfgdp_2000_2020.csv')
+
+#Making the list of countries by continent
+
+country_groups = {
+    "China": ["China"],
+    "India": ["India"],
+    "Asia (excl. China and India)": [
+        'Bangladesh', 'Brunei', 'Cambodia', 'Hong Kong', 'Indonesia', 'Japan', 
+        'Kazakhstan', 'Korea, Rep.', 'Malaysia', 'Maldives', 'Myanmar', 'Pakistan', 
+        'Philippines', 'Singapore', 'Sri Lanka', 'Thailand', 'Vietnam'
+    ],
+    "Oceania": [
+        'Australia', 'Fiji', 'Kiribati', 'Marshall Islands', 'New Zealand', 'Palau', 
+        'Papua New Guinea', 'Samoa', 'Solomon Islands', 'Tonga', 'Timor-Leste'
+    ],
+    "United States": ["United States"],
+    "Americas (excl. USA)": [
+        'Antigua and Barbuda', 'Argentina', 'Barbados', 'Belize', 'Brazil', 'Canada', 
+        'Chile', 'Colombia', 'Costa Rica', 'Dominica', 'Dominican Republic', 'Ecuador', 
+        'El Salvador', 'Grenada', 'Guatemala', 'Guyana', 'Honduras', 'Jamaica', 
+        'Mexico', 'Panama', 'Peru', 'Puerto Rico', 'Suriname', 'Trinidad and Tobago', 
+        'Uruguay', 'Venezuela', 'Bahamas', 'Haiti', 'Nicaragua', 'Saint Kitts and Nevis', 
+        'Saint Lucia', 'Saint Vincent and the Grenadines', 'Sao Tome and Principe'
+    ],
+    "Middle East & North Africa": [
+        'Algeria', 'Bahrain', 'Cyprus', 'Egypt', 'Iran', 'Iraq', 'Israel', 'Jordan', 
+        'Kuwait', 'Lebanon', 'Libya', 'Morocco', 'Oman', 'Palestine', 'Qatar', 
+        'Saudi Arabia', 'Sudan', 'Syria', 'Tunisia', 'Turkey', 'United Arab Emirates', 'Yemen'
+    ],
+    "Sub-Saharan Africa": [
+        'Benin', 'Burkina Faso', 'Cameroon', 'Gabon', 'Ghana', 'Kenya', 'Lesotho', 
+        'Liberia', 'Madagascar', 'Mauritania', 'Nigeria', 'Senegal', 'Seychelles', 
+        'Sierra Leone', 'Somalia', 'South Africa', 'Togo', 'Zimbabwe', 'Angola', 'Comoros', 
+        'Congo', 'Ivory Coast', 'Democratic Republic of the Congo', 'Djibouti', 
+        'Equatorial Guinea', 'Eritrea', 'Gambia', 'Guinea', 'Guinea-Bissau', 
+        'Mozambique', 'Namibia', 'Tanzania'
+    ],
+    "Europe": [
+        'Albania', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Denmark', 
+        'Estonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Iceland', 'Ireland', 
+        'Italy', 'Latvia', 'Lithuania', 'Malta', 'Monaco', 'Netherlands', 'Norway', 'Poland', 
+        'Portugal', 'Romania', 'Russia', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 
+        'Ukraine', 'United Kingdom', 'Montenegro'
+    ]
+}
+
+
+continent_mapping = {
+    'CHN': 'China',
+    'IND': 'India',
+    'USA': 'United States',
+    **{code: 'Asia (excl. China and India)' for code in ['BGD', 'BRN', 'KHM', 'HKG', 'IDN', 'JPN', 'KAZ', 'MYS',
+        'MDV', 'MMR', 'PRK', 'PAK', 'PHL', 'SGP', 'KOR', 'LKA', 'THA', 'VNM']},
+    **{code: 'Oceania' for code in ['AUS', 'FJI', 'KIR', 'MHL', 'NZL', 'PLW', 'PNG', 'WSM', 'SLB', 'TON', 'TLS']},
+    **{code: 'Americas (excl. USA)' for code in ['ATG', 'ARG', 'BRB', 'BLZ', 'BRA', 'CAN', 'CHL', 'COL', 'CRI', 'DMA',
+        'DOM', 'ECU', 'SLV', 'GRD', 'GTM', 'GUY', 'HND', 'JAM', 'MEX', 'PAN', 'PER', 'PRI', 'SUR', 'TTO', 'URY', 'VEN',
+        'BHS', 'HTI', 'NIC', 'KNA', 'LCA', 'VCT', 'STP']},
+    **{code: 'Middle East & North Africa' for code in ['DZA', 'BHR', 'CYP', 'EGY', 'IRN', 'IRQ', 'ISR', 'JOR', 'KWT',
+        'LBN', 'LBY', 'MAR', 'OMN', 'PSE', 'QAT', 'SAU', 'SDN', 'SYR', 'TUN', 'TUR', 'ARE', 'YEM']},
+    **{code: 'Sub-Saharan Africa' for code in ['BEN', 'BFA', 'CMR', 'GAB', 'GHA', 'KEN', 'LSO', 'LBR', 'MDG', 'MRT',
+        'NGA', 'SEN', 'SYC', 'SLE', 'SOM', 'ZAF', 'TGO', 'ZWE', 'AGO', 'COM', 'COG', 'CIV', 'COD', 'DJI', 'GNQ', 'ERI',
+        'GMB', 'GIN', 'GNB', 'MOZ', 'NAM', 'TZA']},
+    **{code: 'Europe' for code in ['ALB', 'BEL', 'BIH', 'BGR', 'HRV', 'DNK', 'EST', 'FIN', 'FRA', 'GEO', 'DEU', 'GRC',
+        'ISL', 'IRL', 'ITA', 'LVA', 'LTU', 'MLT', 'MCO', 'NLD', 'NOR', 'POL', 'PRT', 'ROU', 'RUS', 'SVK', 'SVN', 'ESP',
+        'SWE', 'UKR', 'GBR', 'MNE']}
+}
+
+# The empty value in country is filled with 'Others '
+df_sdg['continent'] = df_sdg['country_code'].map(continent_mapping).fillna('Others')
+df_sdg.to_csv("sdgupdated_file.csv", index=False)
+
+df_sdg["year"] = df_sdg["year"].astype(int)
+df_sdg["country_code"] = df_sdg["country_code"].astype(str)
+
+#Changing the name of the column to merge df3 to df_sdg 
+plastic_df = df3.rename(columns={
+    'Code':'country_code',
+    'Year': 'year',
+    'Entity':'continent',
+    'Share of waste recycled from total regional waste': 'recycled', 
+    'Share of waste incinerated from total regional waste': 'incinerated',
+    'Share of littered and mismanaged from total regional waste': 'littered', 
+    'Share of waste landfilled from total regional waste': 'landfilled'}) 
+
+
+waste_categories = ['recycled', 'incinerated', 'littered', 'landfilled']
+
+plastic_df["year"] = plastic_df["year"].astype(int)
+plastic_df["country_code"] = plastic_df["country_code"].astype(str)
+merged_df = pd.merge(df_sdg, plastic_df, on=['continent',"year"], how="inner")
+
+
+#Checking distribution of goal 4 and goal 8
+sns.histplot(merged_df["goal_4_score"], kde=True, bins=20)
+plt.title("Distribution of Goal 4 Score")
+plt.show()
+
+sns.histplot(merged_df["goal_8_score"], kde=True, bins=20)
+plt.title("Distribution of Goal 8 Score")
+plt.show()
+
+# Calculate skewness & kurtosis 
+goal4_skew = skew(merged_df["goal_4_score"])
+goal8_skew = skew(merged_df["goal_8_score"])
+goal4_kurt = kurtosis(merged_df["goal_4_score"])
+goal8_kurt = kurtosis(merged_df["goal_8_score"])
+
+print(f"Goal 4 Skewness: {goal4_skew}, Kurtosis: {goal4_kurt}")
+print(f"Goal 8 Skewness: {goal8_skew}, Kurtosis: {goal8_kurt}")
+
+#Normality Tests (Shapiro-Wilk & KS Test)
+shapiro_test_goal4 = shapiro(merged_df["goal_4_score"])
+shapiro_test_goal8 = shapiro(merged_df["goal_8_score"])
+
+print(f"Shapiro-Wilk Test for Goal 4: Statistic={shapiro_test_goal4.statistic}, p-value={shapiro_test_goal4.pvalue}")
+print(f"Shapiro-Wilk Test for Goal 8: Statistic={shapiro_test_goal8.statistic}, p-value={shapiro_test_goal8.pvalue}")
+
+ks_test_goal4 = kstest(merged_df["goal_4_score"], 'norm')
+ks_test_goal8 = kstest(merged_df["goal_8_score"], 'norm')
+
+print(f"KS Test for Goal 4: Statistic={ks_test_goal4.statistic}, p-value={ks_test_goal4.pvalue}")
+print(f"KS Test for Goal 8: Statistic={ks_test_goal8.statistic}, p-value={ks_test_goal8.pvalue}")
+
+#df3 skewness
+for category in waste_categories:
+    skewness = skew(merged_df[category])
+    kurt = kurtosis(merged_df[category])
+    shapiro_test = shapiro(merged_df[category])
+
+    print(f"Plastic Waste Category: {category}")
+    print(f"Skewness: {skewness}, Kurtosis: {kurt}")
+    print(f"Shapiro-Wilk Test: Statistic={shapiro_test.statistic}, p-value={shapiro_test.pvalue}")
+    print("-" * 50)
+    
+for i, category in enumerate(waste_categories, 1):
+    plt.subplot(2, 2, i)
+    sns.histplot(merged_df[category], kde=True, bins=30, color="blue")
+    plt.axvline(merged_df[category].mean(), color='red', linestyle='dashed', linewidth=1)  # Mean line
+    plt.title(f"Distribution: {category} ")
+    plt.xlabel("Percentage")
+    plt.ylabel("Frequency")
+
+plt.tight_layout()
+'''
 
 ## 3.2 Data Analysis Methods
 
   Firstly, SDG and plastic management datasets were tested to clarify their distribution. The data from Goal 4 and Goal 8, plastic waste management skewness and kurtosis analysis, and Shapiro-Wilk and KS tests(scipy.stats). Also, the value in the column named year was converted in string type”.astype(str)” to display the year in a discrete-continuous number. Both values for Goal 4 and Goal 8 are skewed, although Goal 4 is significantly negatively skewed, while Goal 8 is almost normally distributed but still skewed. Also, plastic management data in 4 categories are skewed considerably. As all the distribution is skewed, the Spearman correlation is mainly employed in this research. Due to the outliers and smaller continents in a sample size such as Oceania(n = 12),  Kendall Tau is also applied for the regional research. Moreover,  Fischer's z-transformation was applied to the Spearman correlation of Goal 4 and plastic managers and Goal 8 and plastic management. 
 Subsequently, the SDG and plastic waste management datasets were visualised: By calculating the median of correlations between Goal 4, Goal 8, and plastic waste rate by category, the respective distribution by region of correlation scores were clarified. After that, the p-value of the correlation between Goal 4 and plastic management Goal 8 and plastic management were calculated at the global and continent levels to determine the statistical significance. Then, Spearman correlations were calculated and visualised in heat maps to assess the regional tendency of plastic waste management by category. Fisher’s Z test was also employed to check if these correlations were statistically different across datasets or groups. Lastly, unsupervised machine learning of Principal Component Analysis (PCA) was used to uncover hidden patterns visually. The value was standardised to merge all the values in one place (sklearn.decomposition for PCA, sklearn.preprocessing to import StandardScaler).
+'''
+#Calculating spearman and kendall correlation and visualisation in heat maps
+def compute_correlations_by_continent(df, goal, waste_categories):
+    correlation_results = []
+    
+    for continent, sub_df in df.groupby("continent"): 
+        for category in waste_categories:
+            spearman_corr, spearman_p = spearmanr(sub_df[goal], sub_df[category], nan_policy="omit")
+            kendall_corr, kendall_p = kendalltau(sub_df[goal], sub_df[category], nan_policy="omit")
+            
+            correlation_results.append({
+                "continent": continent,
+                "goal": goal,  
+                "plastic_category": category,
+                "spearman_r": spearman_corr,
+                "spearman_p": spearman_p,
+                "kendall_tau": kendall_corr,
+                "kendall_p": kendall_p
+            })
+    
+    return pd.DataFrame(correlation_results)
+
+
+# Compute correlations for Goal 4 & Goal 8
+corr_goal_4 = compute_correlations_by_continent(merged_df, "goal_4_score", waste_categories)
+corr_goal_8 = compute_correlations_by_continent(merged_df, "goal_8_score", waste_categories)
+
+# Create subplots
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(16, 12))
+
+# Function to format correlation & p-value in the heatmap
+def format_value(corr, p_val):
+    if np.isnan(corr):
+        return "NaN"
+    return f"{corr:.2f}\n(p={p_val:.2g})"
+
+# Apply formatting
+corr_goal_4["spearman_text"] = corr_goal_4.apply(lambda row: format_value(row["spearman_r"], row["spearman_p"]), axis=1)
+corr_goal_8["spearman_text"] = corr_goal_8.apply(lambda row: format_value(row["spearman_r"], row["spearman_p"]), axis=1)
+corr_goal_4["kendall_text"] = corr_goal_4.apply(lambda row: format_value(row["kendall_tau"], row["kendall_p"]), axis=1)
+corr_goal_8["kendall_text"] = corr_goal_8.apply(lambda row: format_value(row["kendall_tau"], row["kendall_p"]), axis=1)
+
+# Heatmaps with correlation & p-values
+
+
+fig.suptitle('Figure 8: Spearman and Kendall Correlation, Goal 4, Goal 8 and plastic waste management by Region', fontsize=16)
+sns.heatmap(
+    corr_goal_4.pivot(index="continent", columns="plastic_category", values="spearman_r"),
+    annot=corr_goal_4.pivot(index="continent", columns="plastic_category", values="spearman_text"),
+    cmap="coolwarm", fmt="", linewidths=0.5, ax=axes[0, 0]
+)
+axes[0, 0].set_title("Spearman Correlation (Goal 4 vs Plastic Management)")
+
+sns.heatmap(
+    corr_goal_8.pivot(index="continent", columns="plastic_category", values="spearman_r"),
+    annot=corr_goal_8.pivot(index="continent", columns="plastic_category", values="spearman_text"),
+    cmap="coolwarm", fmt="", linewidths=0.5, ax=axes[0, 1]
+)
+axes[0, 1].set_title("Spearman Correlation (Goal 8 vs Plastic Management)")
+
+sns.heatmap(
+    corr_goal_4.pivot(index="continent", columns="plastic_category", values="kendall_tau"),
+    annot=corr_goal_4.pivot(index="continent", columns="plastic_category", values="kendall_text"),
+    cmap="coolwarm", fmt="", linewidths=0.5, ax=axes[1, 0]
+)
+axes[1, 0].set_title("Kendall Correlation (Goal 4 vs Plastic Management)")
+
+sns.heatmap(
+    corr_goal_8.pivot(index="continent", columns="plastic_category", values="kendall_tau"),
+    annot=corr_goal_8.pivot(index="continent", columns="plastic_category", values="kendall_text"),
+    cmap="coolwarm", fmt="", linewidths=0.5, ax=axes[1, 1]
+)
+axes[1, 1].set_title("Kendall Correlation (Goal 8 vs Plastic Management)")
+
+plt.tight_layout()
+plt.show()
+
+
+'''
+'''
+# Fisher's Z-test for correlation comparison
+
+correlation_results = []
+for category in waste_categories:
+    spearman_corr_4, spearman_p_4 = spearmanr(merged_df["goal_4_score"], merged_df[category])
+    spearman_corr_8, spearman_p_8 = spearmanr(merged_df["goal_8_score"], merged_df[category])
+    
+   
+    if spearman_corr_4 is not None and spearman_corr_8 is not None:
+        z_4 = np.arctanh(spearman_corr_4)
+        z_8 = np.arctanh(spearman_corr_8)
+        n = len(merged_df)
+        se_diff = np.sqrt((1/(n-3)) + (1/(n-3)))
+        fisher_z = (z_4 - z_8) / se_diff
+    else:
+        fisher_z = np.nan
+    
+    correlation_results.append({
+        "plastic_category": category,
+        "goal_4_spearman_r": spearman_corr_4,
+        "goal_4_p_value": spearman_p_4,
+        "goal_8_spearman_r": spearman_corr_8,
+        "goal_8_p_value": spearman_p_8,
+        "fisher_z": fisher_z
+    })
+
+correlation_df = pd.DataFrame(correlation_results)
+print(correlation_df)
+
+'''
+'''
+#Visualisation in PCA
+
+# ===== Features for PCA =====
+features = ["goal_4_score", "goal_8_score", "recycled", "incinerated", "littered", "landfilled"]
+df_numeric = merged_df[features].dropna()
+
+# ===== Standardize Data (PCA Requires Normalized Data) =====
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(df_numeric)
+
+
+pca = PCA(n_components=2) 
+pca_result = pca.fit_transform(scaled_data)
+
+pca_df = pd.DataFrame(pca_result, columns=["PC1", "PC2"])
+pca_df["continent"] = merged_df["continent"].values  # Add continent info back
+
+# ===== Explained Variance =====
+explained_variance = pca.explained_variance_ratio_
+
+# ===== Biplot Function with Better Text Positioning =====
+def biplot(pca, features, ax):
+    loadings = pca.components_.T
+    text_offsets = {  # Adjust offsets for readability
+        "recycled": (1.0, 2.0),
+        "incinerated": (3.0, 1.2),
+        "littered": (2.0, -2.5),
+        "landfilled": (1.8, 1.5),
+        "goal_4_score": (3.3, 2.6),
+        "goal_8_score": (3.3, -0.6),
+    }
+    
+    for i, feature in enumerate(features):
+        ax.arrow(0, 0, loadings[i, 0], loadings[i, 1], 
+                 color="green", alpha=0.7, head_width=0.15)
+        
+        offset_x, offset_y = text_offsets.get(feature, (1.5, 1.5))  # Default offset if not specified
+        ax.text(loadings[i, 0] * offset_x, loadings[i, 1] * offset_y, feature, 
+                color="black", ha='center', va='center', fontsize=12, weight='bold')
+
+# ===== Plot PCA Biplot =====
+plt.figure(figsize=(10, 6))
+ax = plt.gca()
+
+sns.scatterplot(data=pca_df, x="PC1", y="PC2", hue="continent", alpha=0.6, ax=ax)
+
+biplot(pca, features, ax)  # Add arrows and text labels
+
+plt.title("Figure 9: PCA Biplot: Influence of SDGs & Plastic Waste Categories", fontsize=14)
+plt.xlabel(f"Principal Component 1 ({explained_variance[0]*100:.2f}% Variance)")
+plt.ylabel(f"Principal Component 2 ({explained_variance[1]*100:.2f}% Variance)")
+plt.legend(title="Continent", bbox_to_anchor=(1, 1), loc='upper left')
+plt.grid(False)
+'''
+
 
 ## 3.3 Limitations
 The limitations of this research are measurement inconsistency and accuracy. As different measurements were used to collect the data on plastic management rates and SDGs, it would be controversial to confirm the statistical accuracy, although the relatively larger sample size extracted via matching countries proceeded. Also, the SDG data collection may have different measurements before and after 2015, when the SDG goals were settled. 
