@@ -38,7 +38,7 @@ Previous research on the correlations between economic growth and quality educat
 The primary dataset of SDGs and plastic management was cited from Kaggle. The SDG database is the same as the prototype on the United Nations’ website. The number of datasets used was minimised to avoid measurement error. Therefore, based on these two datasets, this research was conducted to observe three correlations of education, economic growth, and plastic management. In addition, the other CSV files stemming from the same plastic management datasets were used to predict plastic production and detect countries matching the plastic management dataset by region used as the primary dataset in this research. In addition, a GDP dataset in US dollars was used to visualise the overview of respective trends (matplotlib and seaborn were used for most data visualisation). 
 Preprocessing was executed by modifying the names of columns in one dataset to match another so that these datasets could be merged(pandas).
 Then, data cleaning was processed by detecting the empty values; however, no missing values were detected. Subsequently, sampling size was extracted by extracting matching countries by their name and country codes. The sample size of countries extracted was approximately 70 % of those listed in the SDG data (N = 195, n = 140). For this research, Spearman correlation was mainly employed, as mentioned in the theoretical framework section. In the process of data analysis, Fisher’s z standardisation was applied to the result of Spearman correlation so that all the data could be appropriate for correlational research.  Data was mainly visualised in line graphs and heat maps. When all the data was combined for a holistic correlation approach, standardising all the data above was applied and they were visualised individually in a biplot to visualise the tendencies in one place.
-
+```
  import pandas as pd
  import numpy as np
  import matplotlib.pyplot as plt
@@ -211,13 +211,13 @@ for i, category in enumerate(waste_categories, 1):
     plt.ylabel("Frequency")
 
 plt.tight_layout()
-'''
+```
 
 ## 3.2 Data Analysis Methods
 
   Firstly, SDG and plastic management datasets were tested to clarify their distribution. The data from Goal 4 and Goal 8, plastic waste management skewness and kurtosis analysis, and Shapiro-Wilk and KS tests(scipy.stats). Also, the value in the column named year was converted in string type”.astype(str)” to display the year in a discrete-continuous number. Both values for Goal 4 and Goal 8 are skewed, although Goal 4 is significantly negatively skewed, while Goal 8 is almost normally distributed but still skewed. Also, plastic management data in 4 categories are skewed considerably. As all the distribution is skewed, the Spearman correlation is mainly employed in this research. Due to the outliers and smaller continents in a sample size such as Oceania(n = 12),  Kendall Tau is also applied for the regional research. Moreover,  Fischer's z-transformation was applied to the Spearman correlation of Goal 4 and plastic managers and Goal 8 and plastic management. 
 Subsequently, the SDG and plastic waste management datasets were visualised: By calculating the median of correlations between Goal 4, Goal 8, and plastic waste rate by category, the respective distribution by region of correlation scores were clarified. After that, the p-value of the correlation between Goal 4 and plastic management Goal 8 and plastic management were calculated at the global and continent levels to determine the statistical significance. Then, Spearman correlations were calculated and visualised in heat maps to assess the regional tendency of plastic waste management by category. Fisher’s Z test was also employed to check if these correlations were statistically different across datasets or groups. Lastly, unsupervised machine learning of Principal Component Analysis (PCA) was used to uncover hidden patterns visually. The value was standardised to merge all the values in one place (sklearn.decomposition for PCA, sklearn.preprocessing to import StandardScaler).
-'''
+```
 #Calculating spearman and kendall correlation and visualisation in heat maps
 def compute_correlations_by_continent(df, goal, waste_categories):
     correlation_results = []
@@ -294,9 +294,8 @@ axes[1, 1].set_title("Kendall Correlation (Goal 8 vs Plastic Management)")
 plt.tight_layout()
 plt.show()
 
-
-'''
-'''
+```
+```
 # Fisher's Z-test for correlation comparison
 
 correlation_results = []
@@ -325,9 +324,8 @@ for category in waste_categories:
 
 correlation_df = pd.DataFrame(correlation_results)
 print(correlation_df)
-
-'''
-'''
+```
+```
 #Visualisation in PCA
 
 # ===== Features for PCA =====
@@ -381,7 +379,7 @@ plt.xlabel(f"Principal Component 1 ({explained_variance[0]*100:.2f}% Variance)")
 plt.ylabel(f"Principal Component 2 ({explained_variance[1]*100:.2f}% Variance)")
 plt.legend(title="Continent", bbox_to_anchor=(1, 1), loc='upper left')
 plt.grid(False)
-'''
+```
 
 
 ## 3.3 Limitations
