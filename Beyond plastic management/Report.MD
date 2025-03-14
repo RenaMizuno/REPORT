@@ -38,17 +38,17 @@ Previous research on the correlations between economic growth and quality educat
 The primary dataset of SDGs and plastic management was cited from Kaggle. The SDG database is the same as the prototype on the United Nations’ website. The number of datasets used was minimised to avoid measurement error. Therefore, based on these two datasets, this research was conducted to observe three correlations of education, economic growth, and plastic management. In addition, the other CSV files stemming from the same plastic management datasets were used to predict plastic production and detect countries matching the plastic management dataset by region used as the primary dataset in this research. In addition, a GDP dataset in US dollars was used to visualise the overview of respective trends (matplotlib and seaborn were used for most data visualisation). 
 Preprocessing was executed by modifying the names of columns in one dataset to match another so that these datasets could be merged(pandas).
 Then, data cleaning was processed by detecting the empty values; however, no missing values were detected. Subsequently, sampling size was extracted by extracting matching countries by their name and country codes. The sample size of countries extracted was approximately 70 % of those listed in the SDG data (N = 195, n = 140). For this research, Spearman correlation was mainly employed, as mentioned in the theoretical framework section. In the process of data analysis, Fisher’s z standardisation was applied to the result of Spearman correlation so that all the data could be appropriate for correlational research.  Data was mainly visualised in line graphs and heat maps. When all the data was combined for a holistic correlation approach, standardising all the data above was applied and they were visualised individually in a biplot to visualise the tendencies in one place.
-'''
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import textwrap
-import statsmodels.api as sm
-from scipy.stats import pearsonr, ttest_ind, skew, kurtosis, shapiro, kstest ,spearmanr, kendalltau, fisher_exact
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
+
+ import pandas as pd
+ import numpy as np
+ import matplotlib.pyplot as plt
+ import seaborn as sns
+ import textwrap
+ import statsmodels.api as sm
+ from scipy.stats import pearsonr, ttest_ind, skew, kurtosis, shapiro, kstest ,spearmanr, kendalltau, fisher_exact
+ from sklearn.linear_model import LinearRegression
+ from sklearn.preprocessing import StandardScaler
+ from sklearn.decomposition import PCA
 
 #Dataset from kaggle:
 #df3 and df4 are same datasets, therefore, matching countries among 3 different datasets
